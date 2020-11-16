@@ -1,0 +1,153 @@
+{
+  "product": {
+    "rails": [
+      "idme-*",
+      "account-api"
+    ],
+    "stencil": [
+      "stencil-*"
+    ],
+    "react": [
+      "account-frontend"
+    ]
+  },
+  "mobile": {
+    "android": [
+      "*android*"
+    ],
+    "ios": [
+      "*ios*"
+    ]
+  },
+  "packages": {
+    "gems": [
+
+      "flash_render",
+      "rack-tracker",
+      "validates_timeliness",
+      "transunion",
+      "experian",
+      "payfone",
+      "assureid",
+      "paperclip-encryption",
+      "idme-status",
+      "idme-assets",
+      "idme-statsd",
+      "idme-geocoder",
+      "idme-fraud-client",
+      "idme-event-tracker",
+      "idme-encryption-client",
+      "idme-lint",
+      "idme-avc",
+      "idme-data",
+      "idme-logger",
+      "idme-prototype_packaging"
+    ]
+  },
+  "github-actions": [
+    "*-actions",
+    "*-action"
+  ],
+  "ops": {
+    "deployment" : [
+      "ops-*",
+      "captain-*",
+      "idme-revelator"
+    ],
+    "local" : [
+      "*-cli",
+      "local-ops-*"
+    ]
+  },
+  "archived": [
+    "Base32hex-RFC2938-Standard",
+    "GMEllipticCurveCrypto",
+    "GRC-govready-q",
+    "IDmeActionLabel",
+    "IDmeDraggableLabel",
+    "IDmeDraggableTextView",
+    "IDmeSegmentedControl",
+    "NSMutableURLRequest-BasicAuth",
+    "PHP-sample-code",
+    "PrivacyEngCollabSpace",
+    "StringPadding.swift",
+    "au10tix",
+    "before_filters",
+    "chefintosh",
+    "clamav-client",
+    "confirmio",
+    "consumer",
+    "disney-verification",
+    "dns_zone_parser",
+    "docs",
+    "event-service",
+    "firebase",
+    "fraud-detection-r-d",
+    "geocoder-service",
+    "hackathons",
+    "idchef",
+    "idme-b2b",
+    "idme-ballot-box",
+    "idme-buttons",
+    "idme-concierge",
+    "idme-etl",
+    "idme-gateway",
+    "idme-geminabox",
+    "idme-groups",
+    "idme-hosted-pages",
+    "idme-i9",
+    "idme-intelligence",
+    "idme-intranet",
+    "idme-irs",
+    "idme-magento",
+    "idme-magento-v2",
+    "idme-mailorama",
+    "idme-marketplace-emails",
+    "idme-marketplace-users",
+    "idme-mobile-archive",
+    "idme-mobile-concierge",
+    "idme-mobile-sdk-ios-internal",
+    "idme-mock-offers-generator",
+    "idme-offers",
+    "idme-offers-cms",
+    "idme-real",
+    "idme-s3",
+    "idme-services",
+    "idme-sfmc",
+    "idme-shop-plugin",
+    "idme-sleep",
+    "idme-transducer",
+    "idme-wallet-android-xmart",
+    "intern-projects",
+    "interview",
+    "jenkins",
+    "josies",
+    "jquery-sample-code",
+    "magento-demo",
+    "mgm-verification",
+    "microblink",
+    "mitek",
+    "obliterate",
+    "obliterate-service",
+    "obliterate-worker",
+    "omniauth-idme",
+    "omniauth-openid-connect",
+    "openid_connect",
+    "paperclip-encryption",
+    "pdfjs_viewer-rails",
+    "python-sample-code",
+    "prototype-gem-packaging",
+    "react-sample-code",
+    "remotipart",
+    "ruby-interview-project",
+    "ruby-sample-code",
+    "salesforce-plugin",
+    "scrum",
+    "simple_api",
+    "sinatra-service",
+    "slideshow",
+    "spree_idme",
+    "telesign",
+    "wrap_c_example"
+  ]
+}

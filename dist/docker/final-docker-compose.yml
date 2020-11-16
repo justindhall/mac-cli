@@ -1,0 +1,378 @@
+version: "3.3"
+services:
+  elasticsearch:
+    command: elasticsearch -Enetwork.host=0.0.0.0
+      -Ediscovery.zen.ping.unicast.hosts=elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.2
+    environment:
+      ES_JAVA_OPTS: -Xms256m -Xmx256m
+      xpack.security.enabled: "false"
+      xpack.monitoring.enabled: "false"
+      xpack.ml.enabled: "false"
+      xpack.graph.enabled: "false"
+      xpack.watcher.enabled: "false"
+    ports:
+      - 9200:9200
+  db:
+    image: postgres:9.5.13
+    environment:
+      POSTGRES_USER: $USER
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - ./databases:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+  nginx:
+    build:
+      context: ./ops/local/local-ops-nginx
+    links:
+      - rails-idme-occupational-licenses:occupationallicenses
+      - rails-idme-developer:developer
+      - rails-idme-idp:api
+      - rails-idme-support:support
+      - rails-idme-verification:verify
+      - rails-idme-test-drive:testdrive
+      - rails-idme-authority:authority
+      - rails-idme-admin:admin
+      - rails-idme-referee:referee
+      - rails-idme-shopify:shopify
+      - rails-idme-arcs:arcs
+      - rails-idme-encryption:encryption
+      - rails-idme-fraud:fraud
+    depends_on:
+      - rails-idme-occupational-licenses
+      - rails-idme-developer
+      - rails-idme-idp
+      - rails-idme-support
+      - rails-idme-verification
+      - rails-idme-test-drive
+      - rails-idme-authority
+      - rails-idme-admin
+      - rails-idme-referee
+      - rails-idme-shopify
+      - rails-idme-arcs
+      - rails-idme-encryption
+      - rails-idme-fraud
+    volumes:
+      - ./ops/local/local-ops-nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./ops/local/local-ops-nginx/certs:/etc/nginx/certs
+    ports:
+      - 80:80
+      - 443:443
+  rails-idme-occupational-licenses:
+    build:
+      context: ./product/rails/idme-occupational-licenses
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-occupational-licenses
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-occupational-licenses
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-occupational-licenses:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+  rails-idme-developer:
+    build:
+      context: ./product/rails/idme-developer
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-developer
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-developer
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-developer:/app
+    ports:
+      - 3001:3001
+    depends_on:
+      - db
+  rails-idme-idp:
+    build:
+      context: ./product/rails/idme-idp
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-idp
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-idp
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-idp:/app
+    ports:
+      - 3002:3002
+    depends_on:
+      - db
+  rails-idme-support:
+    build:
+      context: ./product/rails/idme-support
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-support
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-support
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-support:/app
+    ports:
+      - 3003:3003
+    depends_on:
+      - db
+  rails-idme-verification:
+    build:
+      context: ./product/rails/idme-verification
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-verification
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-verification
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-verification:/app
+    ports:
+      - 3004:3004
+    depends_on:
+      - db
+  rails-idme-test-drive:
+    build:
+      context: ./product/rails/idme-test-drive
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-test-drive
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-test-drive
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-test-drive:/app
+    ports:
+      - 3005:3005
+    depends_on:
+      - db
+  rails-idme-authority:
+    build:
+      context: ./product/rails/idme-authority
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-authority
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-authority
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-authority:/app
+    ports:
+      - 3006:3006
+    depends_on:
+      - db
+  rails-idme-admin:
+    build:
+      context: ./product/rails/idme-admin
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-admin
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-admin
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-admin:/app
+    ports:
+      - 3007:3007
+    depends_on:
+      - db
+  rails-idme-referee:
+    build:
+      context: ./product/rails/idme-referee
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-referee
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-referee
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-referee:/app
+    ports:
+      - 3008:3008
+    depends_on:
+      - db
+  rails-idme-shopify:
+    build:
+      context: ./product/rails/idme-shopify
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-shopify
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-shopify
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-shopify:/app
+    ports:
+      - 3009:3009
+    depends_on:
+      - db
+  rails-idme-arcs:
+    build:
+      context: ./product/rails/idme-arcs
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-arcs
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-arcs
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-arcs:/app
+    ports:
+      - 3010:3010
+    depends_on:
+      - db
+  rails-idme-encryption:
+    build:
+      context: ./product/rails/idme-encryption
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-encryption
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-encryption
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-encryption:/app
+    ports:
+      - 3011:3011
+    depends_on:
+      - db
+  rails-idme-fraud:
+    build:
+      context: ./product/rails/idme-fraud
+      dockerfile: ./Dockerfile-local
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+        GITHUB_USERNAME: $GITHUB_USERNAME
+        APP_NAME: idme-fraud
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: ./entrypoint.sh
+    environment:
+      DATABASE_URL: postgres://$USER@db
+      TEST_DATABASE_URL: postgres://$USER@db
+      RAILS_ENV: development
+      REDIS_DOMAIN: redis
+      USERNAME: $USER
+      APP_NAME: idme-fraud
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    volumes:
+      - ./product/rails/idme-fraud:/app
+    ports:
+      - 3012:3012
+    depends_on:
+      - db
