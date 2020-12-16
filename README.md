@@ -13,7 +13,7 @@ export ROUNDTRIP_WORKSPACE_DIRECTORY=$HOME/roundtrip
 export GITHUB_TOKEN='<your token>'
 source $HOME/workspace/mac-cli/dist/profiles/shared.sh
 ```
-- npm install -g  ts-node tsc typescript
+- ``npm install -g  ts-node tsc typescript``
 - Download docker from https://www.docker.com/products/docker-desktop
 - ``start_roundtrip``
 - ```mac-cli fetch```
