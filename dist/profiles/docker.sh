@@ -23,8 +23,6 @@ dclean () {
   docker rmi -f $(docker images -q)
 }
 
-export JIRA_TOKEN="MZ21W5azyq1ltM8LgXUt7832"
-
 dbuild () {
   docker build --build-arg GITHUB_USERNAME=${GITHUB_USERNAME} --build-arg RAILS_MASTER_KEY=${RAILS_MASTER_KEY}  --build-arg GITHUB_TOKEN=${GITHUB_TOKEN}  --build-arg APP_NAME=$(basename $(pwd)) . -t $(basename $(pwd))
 }

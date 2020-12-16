@@ -17,7 +17,8 @@ export class AliasCli {
     const aliases = localRepos.map((repo) => {
       return [
         `alias go-${repo}="cd ${GitCli.repoPath(repo)}"`,
-        `alias open-${repo}="open ${PumaCli.url(repo)}"`,
+          // this will create links to our applications but I don't know our web structure yet
+        // `alias open-${repo}="open ${PumaCli.url(repo)}"`,
       ]
     });
     const withShebang = ['#!/usr/bin/env bash', ...flatten(aliases)];

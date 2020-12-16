@@ -5,6 +5,7 @@ export ROUNDTRIP_WORKSPACE_DIRECTORY=$HOME/roundtrip
 
 # PROFILE SHORTCUTS
 alias resource='. ~/.zshrc'
+# You can replace subl with an editor of your choice here
 alias zprofile='subl ~/.zshrc'
 
 # LOCAL DEVELOPMENT SETUP
