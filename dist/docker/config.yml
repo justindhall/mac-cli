@@ -1,26 +1,2 @@
 rails:
-  idme-developer:
-    local_image: docker.pkg.github.com/idme/idme-developer/idme-developer:awe-7153
-  idme-idp:
-    local_image: idme-idp
-  idme-support:
-    local_image: idme-support
-  idme-verification:
-    local_image: idme-verification
-  idme-test-drive:
-    local_image: idme-test-drive
-  idme-authority:
-    local_image: idme-authority
-  idme-admin:
-    local_image: idme-admin
-  idme-referee:
-    local_image: docker.pkg.github.com/idme/idme-referee/idme-referee:awe-7153
 
-  idme-shopify:
-    local_image: idme-shopify
-  idme-arcs:
-    local_image: idme-arcs
-  idme-encryption:
-    local_image: idme-encryption
-  idme-fraud:
-    local_image: idme-fraud

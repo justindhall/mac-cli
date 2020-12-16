@@ -8,7 +8,6 @@ import {PumaCli} from "../cli/puma.cli";
 import {CommandsCli} from "../cli/commands.cli";
 import {AliasCli} from "../cli/alias.cli";
 import {DockerComposeFile} from "../docker-compose/file.docker-compose";
-import {IterateCli} from "../cli/iterate.cli";
 const clear = require('clear');
 const figlet = require('figlet');
 const chalk = require('chalk');
@@ -33,6 +32,7 @@ export class CliNavigation {
     'local-repos',
     'missing-local-repos',
     'npm',
+    'pull-all-repos',
     'repo-names',
     'repos',
     'run-in-all',
@@ -112,8 +112,6 @@ export class CliNavigation {
 
     } else if (command === 'repo-structure') {
       await GitCli.allPaths();
-    } else if (command === 'iterate') {
-      await IterateCli.run();
     } else if (command === 'branches') {
       await GitCli.branches();
     } else if (command === 'create-docker-compose') {
@@ -141,6 +139,9 @@ export class CliNavigation {
     } else if (command === 'fetch') {
       await GitCli.fetch();
       AliasCli.create();
+    }
+    else if (command === 'pull-all-repos') {
+        await GitCli.pull();
     } else if (command === 'run-in-all') {
       if([undefined, null, ''].includes(args.c)) {
         LoggerService.error('ERROR: Please supply a command.');

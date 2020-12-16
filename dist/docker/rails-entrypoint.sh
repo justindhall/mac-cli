@@ -15,7 +15,8 @@ bundle check || bundle install
 
 ##DATABASE MIGRATION##
 
-##REPLACE THE idme.dev with the current branch
-#egrep -lr  'idme.dev' /app/. | xargs -r sed -i -e "s/idme\.dev/${BRANCH}.id-me.io/g"
+## this doesn't work and I don't know how to make it work
+#egrep -lr  'roundtrip' /app/. | xargs -r sed -i -e "s/roundtrip\.com/${BRANCH}.roundtrip.io/g"
+
 >&2 echo "start server"
 rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb -p 3000

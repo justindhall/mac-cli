@@ -30,21 +30,13 @@ export class PumaCli {
   }
 
   static url(repo: string) {
-    return `https://${PumaCli.address(repo)}.dev`
+    return `https://${PumaCli.address(repo)}.com`
   }
 
   private static address(repo: string) {
     switch(repo) {
-      case 'idme-idp':
-        return 'api.idme';
-      case 'idme-marketplace':
-        return 'shop.idme';
-      case 'idme-verification':
-        return 'verify.idme';
-      case 'account-api':
-        return 'account-api.idme';
       default:
-        return  repo.replace(/^idme-/, '').replace(/\-/g, '') + '.idme';
+        return  repo.replace(/^roundtrip-/, 'roundtriphealth').replace(/\-/g, '');
     }
   }
 }

@@ -1,32 +1,28 @@
-name: PR for master
-
-on:
-  pull_request:
-    branches:
-      - master
-jobs:
-
-  build:
-    name: Version + Build + Publish
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 100
-
-      - name: Log into registry
-        run: |
-          echo "${{ secrets.CI_GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-      - name: Pull Docker Image
-        run: |
-          docker pull docker.pkg.github.com/idme/semantic-versioning-actions/semantic-versioning-actions:latest
-      - name: Add Jira Issue to commit message
-        run: |
-          docker run -v $GITHUB_WORKSPACE/:/current \
-            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-            -e GITHUB_ACTOR=$GITHUB_ACTOR  \
-            -e GITHUB_HEAD_REF=$GITHUB_HEAD_REF  \
-            -e GITHUB_REF=$GITHUB_REF  \
-            -e GITHUB_REPOSITORY=$GITHUB_REPOSITORY  \
-            docker.pkg.github.com/idme/semantic-versioning-actions/semantic-versioning-actions pull-request
+#name: PR for master
+#
+#on:
+#  pull_request:
+#    branches:
+#      - master
+#jobs:
+#
+#  build:
+#    name: Version + Build + Publish
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          fetch-depth: 100
+#
+#      - name: Log into registry
+#        run: |
+#          echo "${{ secrets.CI_GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+#      - name: Add Jira Issue to commit message
+#        run: |
+#          docker run -v $GITHUB_WORKSPACE/:/current \
+#            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+#            -e GITHUB_ACTOR=$GITHUB_ACTOR  \
+#            -e GITHUB_HEAD_REF=$GITHUB_HEAD_REF  \
+#            -e GITHUB_REF=$GITHUB_REF  \
+#            -e GITHUB_REPOSITORY=$GITHUB_REPOSITORY  \

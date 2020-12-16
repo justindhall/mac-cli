@@ -20,5 +20,5 @@ echo $(pwd)
  			-e GITHUB_TOKEN=$GITHUB_TOKEN  \
       -e GITHUB_HEAD_REF='master'  \
       -e GITHUB_REF='master'  \
- 			-e GITHUB_REPOSITORY=$(basename $(pwd)) docker.pkg.github.com/idme/semantic-versioning-actions/semantic-versioning-actions release
+ 			-e GITHUB_REPOSITORY=$(basename $(pwd)) docker.pkg.github.com/roundtrip/ release
 }

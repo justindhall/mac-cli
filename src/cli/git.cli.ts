@@ -166,6 +166,18 @@ export class GitCli {
     LoggerService.success(`Completed fetch for all ${localRepos.length} repos.`)
   }
 
+  static async pull() {
+    await GitCli.cloneMissingRepos();
+    const localRepos = FilesCli.localNotArchivedRepos().sort();
+    LoggerService.info(`Starting pull process.`);
+    LoggerService.grey(`There are ${localRepos.length} repos to be pulled.`);
+    const all = Promise.all(localRepos.map((repo) => {
+      GitCli.pullRepo(repo)
+    }));
+    const finished = await all;
+    LoggerService.success(`Completed pull for all ${localRepos.length} repos.`)
+  }
+
   static cleanStatus(repo: string) {
     const status: any = GitCli.commandInRepo(repo, 'status');
     return status.includes('nothing to commit, working tree clean');
@@ -206,6 +218,20 @@ export class GitCli {
 
     GitCli.commandInRepo(repo, 'fetch');
     LoggerService.magenta(`Successfully fetched ${repo}`);
+  }
+
+  static async pullRepo(repo: string) {
+    if(!FilesCli.gitExists(repo)) { return; }
+
+    if(!GitCli.cleanStatus(repo)) {
+      LoggerService.pink(`${repo} has files that need to be committed.`)
+    }
+    if(!GitCli.onMaster(repo)) {
+      LoggerService.pink(`${repo} is NOT on master [${GitCli.getBranch(repo)}]`);
+    }
+
+    GitCli.commandInRepo(repo, 'pull');
+    LoggerService.magenta(`Successfully pulled ${repo}`);
   }
 
   static commandInRepo(repo: string, command: string) {

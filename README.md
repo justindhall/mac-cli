@@ -1,5 +1,5 @@
 # mac-cli
-A place to put ops code to setup you local development environment on a mac
+A place to put ops code to setup your local development environment on a mac
 ## Setup
 - ```mkdir -p $HOME/workspace```
 - ```cd $HOME/workspace```

@@ -4,8 +4,7 @@ import {DOCKER_PATH} from "../constants/file.constant";
 import {keys} from 'underscore';
 import {GitCli} from "../cli/git.cli";
 import {parse, stringify} from "yaml";
-import {exec, pwd} from 'shelljs';
-import {LoggerService} from "../services/logger.service";
+import {exec} from 'shelljs';
 
 export class DockerComposeFile {
   cache: any = {};
@@ -65,9 +64,7 @@ export class DockerComposeFile {
     const fileContents: any = readFileSync(`${GitCli.repoPath(repo)}/Gemfile`, 'utf-8');
     let lines: string[] = fileContents.split('\n');
     lines = lines.map((line: string) => {
-       if (line.toLowerCase().includes('git@github.com:samuelbirk')) {
-        return line.replace(/git@github.com:samuelbirk/i, "https://github.com/samuelbirk");
-      } else if (line.toLowerCase().includes('git@github.com:')) {
+      if (line.toLowerCase().includes('git@github.com:')) {
         return line.replace(/git@github.com:/i, "https://github.com/");
       } else {
         return line;

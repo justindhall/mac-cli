@@ -12,13 +12,6 @@ COPY . /app
 WORKDIR /app
 
 ENV GEM_CREDENTIALS="---\n:github: Bearer ${GITHUB_TOKEN}"
-ENV GEMRC_CREDENTIALS="---\n:backtrace: false\n:bulk_threshold: 1000\n:sources:\n- https://rubygems.org/\n- https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@rubygems.pkg.github.com/IDme/\n:update_sources: true\n:verbose: true\n"
-
-RUN mkdir -p /root/.gem
-RUN touch /root/.gem/credentials
-RUN chmod 600 /root/.gem/credentials
-RUN echo -e $GEM_CREDENTIALS > /root/.gem/credentials
-RUN echo -e $GEMRC_CREDENTIALS > /root/.gemrc
 
 ENV BUNDLE_GITHUB__COM=x-access-token:$GITHUB_TOKEN
 ENV BUNDLE_PATH=/root/.gems

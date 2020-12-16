@@ -1,2 +1,2 @@
 ##!/usr/bin/env bash
-#npm config set @idme:registry https://npm.pkg.github.com
+#npm config set @roundtrip:registry https://npm.pkg.github.com
