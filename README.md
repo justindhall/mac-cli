@@ -1,8 +1,8 @@
 # mac-cli
 A place to put ops code to setup your local development environment on a mac
 ## Setup
-- ```mkdir -p $HOME/workspace```
-- ```cd $HOME/workspace```
+- ```mkdir -p $HOME/roundtrip```
+- ```cd $HOME/roundtrip```
 - ```git clone git@github.com:justindhall/roundtrip-mac-cli.git```
 - You will probably want to add the following to your .zshrc or .bash_profile
 ```bash
@@ -11,6 +11,7 @@ A place to put ops code to setup your local development environment on a mac
 export ROUNDTRIP_WORKSPACE_DIRECTORY=$HOME/roundtrip 
 # You can find create a GITHUB_TOKEN by going to https://github.com/settings/tokens 
 export GITHUB_TOKEN='<your token>'
+export JIRA_TOKEN='<your token>'
 source $HOME/workspace/mac-cli/dist/profiles/shared.sh
 ```
 - ``npm install -g  ts-node tsc typescript``
