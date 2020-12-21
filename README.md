@@ -1,6 +1,9 @@
 # mac-cli
 A place to put ops code to setup your local development environment on a mac
 ## Setup
+
+*While I have not tested this in a Linux environment, I beleive everything should work similarly and without issue*
+
 - ```mkdir -p $HOME/roundtrip```
 - ```cd $HOME/roundtrip```
 - ```git clone git@github.com:justindhall/roundtrip-mac-cli.git```
